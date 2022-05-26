@@ -26,12 +26,14 @@ public class ExpenseController {
 		return expenseService.getExpenseById(id);
 	}
 
+	@ResponseStatus(value = HttpStatus.NO_CONTENT)
 	@DeleteMapping("/expenses")
 	public void deleteExpenseById(@RequestParam Long id) {
 		System.out.println("id: " + id);
 		expenseService.deleteExpenseById(id);
 	}
 
+	@ResponseStatus(value = HttpStatus.CREATED)
 	@PostMapping("/expenses")
 	public Expense saveExpenseDetails(@Valid @RequestBody Expense expense) {
 		return expenseService.saveExpenseDetails(expense);
