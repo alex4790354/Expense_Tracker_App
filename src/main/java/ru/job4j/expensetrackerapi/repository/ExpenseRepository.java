@@ -11,7 +11,11 @@ import java.util.Optional;
 
 @Repository
 public interface ExpenseRepository extends JpaRepository<Expense, Long> {
-	
 
+    Page<Expense> findByCategory(String category, Pageable page);
+
+    Page<Expense> findByNameContaining(String keyword, Pageable page);
+
+    Page<Expense> findByDateBetween(Date startDate, Date endDate, Pageable page);
 	
 }
