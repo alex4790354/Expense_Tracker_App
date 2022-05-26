@@ -1,11 +1,12 @@
 package ru.job4j.expensetrackerapi.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.job4j.expensetrackerapi.entity.Expense;
 import ru.job4j.expensetrackerapi.service.ExpenseService;
-
 import javax.validation.Valid;
 import java.util.List;
 
@@ -14,10 +15,10 @@ public class ExpenseController {
 
 	@Autowired
 	private ExpenseService expenseService;
-	
+
 	@GetMapping("/expenses")
-	public List<Expense> getAllExpenses() {
-		return expenseService.getAllExpenses();
+	public List<Expense> getAllExpenses(Pageable page) {
+		return expenseService.getAllExpenses(page).toList();
 	}
 
 	@GetMapping("/expenses/{id}")

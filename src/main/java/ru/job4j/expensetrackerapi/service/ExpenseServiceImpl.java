@@ -1,11 +1,11 @@
 package ru.job4j.expensetrackerapi.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.job4j.expensetrackerapi.entity.Expense;
 import ru.job4j.expensetrackerapi.repository.ExpenseRepository;
-
-import java.util.List;
 import java.util.Optional;
 
 
@@ -25,8 +25,8 @@ public class ExpenseServiceImpl implements ExpenseService {
 	}
 
 	@Override
-	public List<Expense> getAllExpenses() {
-		return expenseRepo.findAll();
+	public Page<Expense> getAllExpenses(Pageable page) {
+		return expenseRepo.findAll(page);
 	}
 
 	@Override
