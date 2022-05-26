@@ -33,7 +33,6 @@ public class Expense {
 	@Size(min = 3, message = "Expense name must be atleast 3 characters")
 	private String name;
 	
-	
 	private String description;
 	
 	@Column(name = "expense_amount")
@@ -53,6 +52,12 @@ public class Expense {
 	@Column(name = "updated_at")
 	@UpdateTimestamp
 	private Timestamp updatedAt;
+
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "user_id", nullable = false)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	@JsonIgnore
+	private User user;
 
 }
 
