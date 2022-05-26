@@ -46,6 +46,14 @@ public class Expense {
 	@NotNull(message = "Date must not be null")
 	private Date date;
 
+	@Column(name = "created_at", nullable = false, updatable = false)
+	@CreationTimestamp
+	private Timestamp createdAt;
+
+	@Column(name = "updated_at")
+	@UpdateTimestamp
+	private Timestamp updatedAt;
+
 }
 
 
