@@ -6,7 +6,10 @@ import org.springframework.stereotype.Service;
 import ru.job4j.expensetrackerapi.entity.User;
 import ru.job4j.expensetrackerapi.entity.UserModel;
 import ru.job4j.expensetrackerapi.exceptions.ItemExistsException;
+import ru.job4j.expensetrackerapi.exceptions.ResourceNotFoundException;
 import ru.job4j.expensetrackerapi.repository.UserRepository;
+
+import java.util.Optional;
 
 
 @Service
@@ -25,6 +28,27 @@ public class UserServiceImpl implements UserService {
 		return userRepository.save(newUser);
 	}
 
+	@Override
+	public User read(Long userId) {
+		return userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("Wasn't able to find user with id = " + userId));
+	}
+
+	@Override
+	public User update(User user, Long id) {
+		User oldUser = read(id);
+		oldUser.setName(user.getName() != null ? user.getName() : oldUser.getName());
+		oldUser.setEmail(user.getEmail() != null ? user.getEmail() : oldUser.getEmail());
+		oldUser.setPassword(user.getPassword() != null ? user.getPassword() : oldUser.getPassword());
+		oldUser.setAge(user.getAge() != null ? user.getAge() : oldUser.getAge());
+
+		return userRepository.save(oldUser);
+	}
+
+	@Override
+	public void delete(Long id) {
+		User user = read(id);
+		userRepository.delete(user);
+	}
 }
 
 
