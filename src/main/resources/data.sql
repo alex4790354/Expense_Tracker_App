@@ -1,7 +1,7 @@
-INSERT INTO users(name, email, password, age, created_at, updated_at) VALUES ('agent007', 'agent007@mail.ru', '123456', 30, '2022-04-25', '2022-04-25');
-INSERT INTO users(name, email, password, age, created_at, updated_at) VALUES ('admin',    'admin@mail.ru',    '123456', 35, '2022-05-26', '2022-05-26');
-INSERT INTO users(name, email, password, age, created_at, updated_at) VALUES ('web_user', 'webUser@mail.ru',  '123456', 40, '2022-05-27', '2022-05-27');
-
+INSERT INTO users(name, email, password, age, created_at, updated_at) VALUES ('agent007', 'agent007@gmail.com',   '$2a$10$5P/QPwfOVkBZpCTxi5TKMOp6BHB0U0S.4naXT39/wHsZRc67lIWU2', 30, '2022-04-25', '2022-04-25');
+INSERT INTO users(name, email, password, age, created_at, updated_at) VALUES ('admin',    'admin@gmail.com',      '$2a$10$5P/QPwfOVkBZpCTxi5TKMOp6BHB0U0S.4naXT39/wHsZRc67lIWU2', 35, '2022-05-26', '2022-05-26');
+INSERT INTO users(name, email, password, age, created_at, updated_at) VALUES ('web_user', 'webUserser@gmail.com', '$2a$10$5P/QPwfOVkBZpCTxi5TKMOp6BHB0U0S.4naXT39/wHsZRc67lIWU2', 40, '2022-05-27', '2022-05-27');
+--- password: 12345
 
 INSERT INTO expenses(user_id, expense_name, description, expense_amount, category, date, created_at, updated_at) VALUES(1, 'Heating',      'maintenance bill',   121.11, 'Heating',     '2022-03-01', '2022-03-01', '2022-03-01');
 INSERT INTO expenses(user_id, expense_name, description, expense_amount, category, date, created_at, updated_at) VALUES(1, 'Heating',      'maintenance bill',   252.22, 'Heating',     '2022-04-01', '2022-04-01', '2022-04-01');

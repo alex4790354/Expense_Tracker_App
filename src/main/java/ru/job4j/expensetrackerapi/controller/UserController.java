@@ -21,11 +21,6 @@ public class UserController {
 		return new ResponseEntity<>(userService.read(id), HttpStatus.OK);
 	}
 
-	@PostMapping("/users")
-	public ResponseEntity<User> save(@Valid @RequestBody UserModel userModel) {
-		return new ResponseEntity<User>(userService.createUser(userModel), HttpStatus.CREATED);
-	}
-
 	@PutMapping("/users/{id}")
 	public ResponseEntity<User> update(@RequestBody User user, @PathVariable Long id) {
 		return new ResponseEntity<User>(userService.update(user, id), HttpStatus.OK);

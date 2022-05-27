@@ -2,6 +2,7 @@ package ru.job4j.expensetrackerapi.service;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.job4j.expensetrackerapi.entity.User;
 import ru.job4j.expensetrackerapi.entity.UserModel;
@@ -16,6 +17,9 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
 	@Autowired
+	private PasswordEncoder bcryptEncoder;
+
+	@Autowired
 	private UserRepository userRepository;
 	
 	@Override
@@ -25,6 +29,7 @@ public class UserServiceImpl implements UserService {
 		}
 		User newUser = new User();
 		BeanUtils.copyProperties(userModel, newUser);
+		newUser.setPassword(bcryptEncoder.encode(newUser.getPassword()));
 		return userRepository.save(newUser);
 	}
 
@@ -38,7 +43,7 @@ public class UserServiceImpl implements UserService {
 		User oldUser = read(id);
 		oldUser.setName(user.getName() != null ? user.getName() : oldUser.getName());
 		oldUser.setEmail(user.getEmail() != null ? user.getEmail() : oldUser.getEmail());
-		oldUser.setPassword(user.getPassword() != null ? user.getPassword() : oldUser.getPassword());
+		oldUser.setPassword(user.getPassword() != null ? bcryptEncoder.encode(user.getPassword()) : oldUser.getPassword());
 		oldUser.setAge(user.getAge() != null ? user.getAge() : oldUser.getAge());
 
 		return userRepository.save(oldUser);
