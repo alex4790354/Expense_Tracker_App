@@ -16,12 +16,12 @@ public class UserServiceImpl implements UserService {
 	private UserRepository userRepository;
 	
 	@Override
-	public User createUser(UserModel user) {
-		if (userRepository.existsByEmail(user.getEmail())) {
-			throw new ItemExistsException("User is already register with email:" + user.getEmail());
+	public User createUser(UserModel userModel) {
+		if (userRepository.existsByEmail(userModel.getEmail())) {
+			throw new ItemExistsException("User is already register with email:" + userModel.getEmail());
 		}
 		User newUser = new User();
-		BeanUtils.copyProperties(user, newUser);
+		BeanUtils.copyProperties(userModel, newUser);
 		return userRepository.save(newUser);
 	}
 

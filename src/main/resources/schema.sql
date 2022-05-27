@@ -10,6 +10,7 @@ CREATE TABLE users
     updated_at      TIMESTAMP
 );
 ALTER TABLE users ADD CONSTRAINT users_pk_01 PRIMARY KEY (id);
+ALTER TABLE users ADD CONSTRAINT users_email UNIQUE (email);
 
 
 DROP TABLE IF EXISTS expenses CASCADE;
