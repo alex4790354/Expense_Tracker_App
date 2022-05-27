@@ -19,6 +19,9 @@ public class ExpenseServiceImpl implements ExpenseService {
 	@Autowired
 	private ExpenseRepository expenseRepo;
 
+	@Autowired
+	private UserService userService;
+
 	@Override
 	public Expense getExpenseById(Long id) {
 		Optional<Expense> expense = expenseRepo.findById(id);
@@ -41,6 +44,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 
 	@Override
 	public Expense saveExpenseDetails(Expense expense) {
+		expense.setUser(userService.getLoggedInUser());
 		return expenseRepo.save(expense);
 	}
 

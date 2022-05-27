@@ -2,6 +2,9 @@ package ru.job4j.expensetrackerapi.service;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.job4j.expensetrackerapi.entity.User;
@@ -54,6 +57,16 @@ public class UserServiceImpl implements UserService {
 		User user = read(id);
 		userRepository.delete(user);
 	}
+
+	@Override
+	public User getLoggedInUser() {
+
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String email = authentication.getName();
+
+		return userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found for the email: " + email));
+	}
+
 }
 
 
