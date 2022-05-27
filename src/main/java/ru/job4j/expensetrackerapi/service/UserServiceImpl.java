@@ -24,72 +24,48 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	@Override
-	public User createUser(UserModel userModel) {
-		if (userRepository.existsByEmail(userModel.getEmail())) {
-			throw new ItemExistsException("User is already register with email:" + userModel.getEmail());
+	public User createUser(UserModel user) {
+		if (userRepository.existsByEmail(user.getEmail())) {
+			throw new ItemExistsException("User is already register with email:"+user.getEmail());
 		}
 		User newUser = new User();
-		BeanUtils.copyProperties(userModel, newUser);
+		BeanUtils.copyProperties(user, newUser);
 		newUser.setPassword(bcryptEncoder.encode(newUser.getPassword()));
 		return userRepository.save(newUser);
 	}
 
 	@Override
-	public User read(Long userId) {
-		return userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("Wasn't able to find user with id = " + userId));
+	public User readUser() {
+		Long userId = getLoggedInUser().getId();
+		return userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found for the id:"+userId));
 	}
 
 	@Override
-	public User update(User user, Long id) {
-		User oldUser = read(id);
-		oldUser.setName(user.getName() != null ? user.getName() : oldUser.getName());
-		oldUser.setEmail(user.getEmail() != null ? user.getEmail() : oldUser.getEmail());
-		oldUser.setPassword(user.getPassword() != null ? bcryptEncoder.encode(user.getPassword()) : oldUser.getPassword());
-		oldUser.setAge(user.getAge() != null ? user.getAge() : oldUser.getAge());
-
-		return userRepository.save(oldUser);
+	public User updateUser(UserModel user) {
+		User existingUser = readUser();
+		existingUser.setName(user.getName() != null ? user.getName() : existingUser.getName());
+		existingUser.setEmail(user.getEmail() != null ? user.getEmail() : existingUser.getEmail());
+		existingUser.setPassword(user.getPassword() != null ? bcryptEncoder.encode(user.getPassword()) : existingUser.getPassword());
+		existingUser.setAge(user.getAge() != null ? user.getAge() : existingUser.getAge());
+		return userRepository.save(existingUser);
 	}
 
 	@Override
-	public void delete(Long id) {
-		User user = read(id);
-		userRepository.delete(user);
+	public void deleteUser() {
+		User existingUser = readUser();
+		userRepository.delete(existingUser);
 	}
 
 	@Override
 	public User getLoggedInUser() {
-
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
 		String email = authentication.getName();
 
-		return userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found for the email: " + email));
+		return userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found for the email"+email));
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

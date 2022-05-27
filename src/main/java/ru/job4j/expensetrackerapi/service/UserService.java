@@ -5,14 +5,14 @@ import ru.job4j.expensetrackerapi.entity.User;
 import ru.job4j.expensetrackerapi.entity.UserModel;
 
 public interface UserService {
-	
+
 	User createUser(UserModel user);
 
-	User read(Long id);
+	User readUser();
 
-	User update(User user, Long id);
+	User updateUser(UserModel user);
 
-	void delete(Long id);
+	void deleteUser();
 
 	User getLoggedInUser();
 
