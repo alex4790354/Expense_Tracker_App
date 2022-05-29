@@ -6,6 +6,6 @@ import lombok.Data;
 public class AuthModel {
 
 	private String email;
-	
 	private String password;
+
 }
